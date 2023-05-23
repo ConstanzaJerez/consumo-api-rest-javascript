@@ -3,12 +3,21 @@ const api = axios.create({
 });
 api.defaults.headers.common['X-API-KEY'] = 'c08d415f-dea7-4a38-bb28-7b2188202e46';
 
+
+
+
 const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2';
-const API_URL_FAVOTITES = 'https://api.thecatapi.com/v1/favourites';
-const API_URL_FAVOTITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}`;
+const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites';
+const API_URL_FAVORITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}`;
 const API_URL_UPLOAD = 'https://api.thecatapi.com/v1/images/upload';
 
+
+
+
 const spanError = document.getElementById('error')
+//Que cualquier id tenga un error distinto a 200, al llamar al fetch
+
+
 
 async function loadRandomMichis() {
   const res = await fetch(API_URL_RANDOM);
@@ -21,10 +30,11 @@ async function loadRandomMichis() {
   } else {
     const img1 = document.getElementById('img1');
     const img2 = document.getElementById('img2');
+
     const btn1 = document.getElementById('btn1');
     const btn2 = document.getElementById('btn2');
     
-    img1.src = data[0].url;
+    img1.src = data[0].url; //se inserta el src con la url de la imagen que nos haya cargado la API
     img2.src = data[1].url;
 
     btn1.onclick = () => saveFavouriteMichi(data[0].id);
@@ -32,8 +42,10 @@ async function loadRandomMichis() {
   }
 }
 
+
+
 async function loadFavouriteMichis() {
-  const res = await fetch(API_URL_FAVOTITES, {
+  const res = await fetch(API_URL_FAVORITES, {
     method: 'GET',
     headers: {
       'X-API-KEY': 'c08d415f-dea7-4a38-bb28-7b2188202e46',
@@ -54,6 +66,7 @@ async function loadFavouriteMichis() {
     h2.appendChild(h2Text);
     section.appendChild(h2);
 
+    //clase11
     data.forEach(michi => {
       const article = document.createElement('article');
       const img = document.createElement('img');
@@ -71,18 +84,20 @@ async function loadFavouriteMichis() {
   }
 }
 
+
+
 async function saveFavouriteMichi(id) {
   const { data, status } = await api.post('/favourites', {
     image_id: id,
   });
   
-  // const res = await fetch(API_URL_FAVOTITES, {
+  // const res = await fetch(API_URL_FAVORITES, {
   //   method: 'POST',
-  //   headers: {
+  //   headers: { 
   //     'Content-Type': 'application/json',
   //     'X-API-KEY': 'c08d415f-dea7-4a38-bb28-7b2188202e46',
   //   },
-  //   body: JSON.stringify({
+  //   body: JSON.stringify({     //informacion al backend
   //     image_id: id
   //   }),
   // });
@@ -98,8 +113,12 @@ async function saveFavouriteMichi(id) {
   }
 }
 
+
+
+
+
 async function deleteFavouriteMichi(id) {
-  const res = await fetch(API_URL_FAVOTITES_DELETE(id), {
+  const res = await fetch(API_URL_FAVORITES_DELETE(id), {
     method: 'DELETE',
     headers: {
       'X-API-KEY': 'c08d415f-dea7-4a38-bb28-7b2188202e46',
@@ -114,6 +133,13 @@ async function deleteFavouriteMichi(id) {
     loadFavouriteMichis();
   }
 }
+
+
+
+
+
+
+
 
 async function uploadMichiPhoto() {
   const form = document.getElementById('uploadingForm')
