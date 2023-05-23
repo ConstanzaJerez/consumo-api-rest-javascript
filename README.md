@@ -1,3 +1,3 @@
 # Consumo API REST Javascript
-Curso de Consumo de API REST con JavaScript
+Curso en proceso de Consumo de API REST con JavaScript
 
